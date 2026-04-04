@@ -1,23 +1,32 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { fetchCryptoMarkets } from "@/lib/api";
+import { useMemo, useState } from "react";
 import { useCryptoPrices } from "@/hooks/useCryptoPrices";
-
+import SearchBar from "@/components/SearchBar";
+import { filterCoins } from "@/lib/utils";
 
 export default function Page() {
-  // const { coins, loading, error, reload } = useCryptoPrices(30000);
-  const [coins, setCoins] = useState<any[]>([]);
+  const { coins, loading, error } = useCryptoPrices(30000);
+  const [query, setQuery] = useState("");
 
-  useEffect(() => {
-    fetchCryptoMarkets().then(setCoins);
-  }, []);
+  const filteredCoins = useMemo(() => {
+    return filterCoins(coins, query);
+  }, [coins, query]);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
     <div>
-      {coins.map((c) => (
-        <div key={c.id}>{c.name}</div>
-      ))}
+      <SearchBar value={query} onChange={setQuery} />
+
+      <div>
+        {filteredCoins.map((c) => (
+          <div key={c.id}>
+            {c.name} - ${c.current_price}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
