@@ -7,6 +7,7 @@ import CoinList from "@/components/CoinList";
 import { useCryptoPrices } from "@/hooks/useCryptoPrices";
 import { filterCoins } from "@/lib/utils";
 import { CoinItem } from "@/types/crypto";
+import Converter from "@/components/Converter";
 
 export default function HomePage() {
   const { coins, loading, error, reload } = useCryptoPrices(30000);
@@ -78,6 +79,9 @@ export default function HomePage() {
               onSelect={setSelectedCoin}
             />
           )}
+        </div>
+        <div>
+          <Converter coin={selectedCoin} />
         </div>
       </section>
     </main>
