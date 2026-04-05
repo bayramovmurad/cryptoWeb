@@ -11,7 +11,7 @@ type Props = {
 
  function CoinList({ coins, selectedCoin, onSelect }: Props) {
   return (
-    <div>
+    <div className="grid grid-cols-2 gap-4 max-[980px]:grid-cols-1">
       {coins.map((coin) => (
         <CoinCard
           key={coin.id}

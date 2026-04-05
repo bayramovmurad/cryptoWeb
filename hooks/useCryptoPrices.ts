@@ -26,7 +26,6 @@ export function useCryptoPrices(refreshMs = 30000) {
             setLoading(false);
         }
     }, []);
-
     useEffect(() => {
         loadCoins();
 
